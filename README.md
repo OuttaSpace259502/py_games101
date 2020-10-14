@@ -1,2 +1,6 @@
 # py_games101
-My very first games in Python!
+
+I will be storing my first Python Games here in this repository.
+It won't be anything crazy, but only easy PyGames for beginners.
+As I advance, I will create new repositories to document my improvements 
+and journey in Python!
