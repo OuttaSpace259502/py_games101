@@ -1,26 +1,25 @@
 import tkinter as tk
 from tkinter import Button, Message, font
-from tkinter.scrolledtext import ScrolledText
-from PIL import ImageTk as itk
+
 
 # Coordinates for 2 buttons, side by side, from left to right
 # Giving this button formation the color name 'red' to differenciate from other button groups
-RED_Y_VALUE = 450
-RED_LEFT_X_VALUE = 150
-RED_RIGHT_X_VALUE = 560
+RED_Y_VALUE = 0.6
+RED_LEFT_X_VALUE = 0.25
+RED_RIGHT_X_VALUE = 0.6
 
 # Coordinated for 3 buttons each stacked on top of each other
 # This button group is called 'blue'
-BLUE_X_VALUE = 550
-BLUE_TOP_Y = 400
-BLUE_MIDDLE_Y = 500
-BLUE_BOTTOM_Y = 600
+BLUE_X_VALUE = 0.43
+BLUE_TOP_Y = 0.5
+BLUE_MIDDLE_Y = 0.65
+BLUE_BOTTOM_Y = 0.8
 
 # Coordinates for small button (Submit, Quit, Answer)
-SMALL_BTN_YVALUE = 650
-SUBMIT_X_VALUE = 600
-QUIT_X_VALUE = 1100
-ANSWER_X_VALUE = 100
+SMALL_BTN_YVALUE = 0.85
+SUBMIT_X_VALUE = 0.47
+# QUIT_X_VALUE =
+# ANSWER_X_VALUE =
 # Small button width and height
 SB_WIDTH = 80
 SB_HEIGHT = 20
@@ -42,7 +41,7 @@ def welcome_page():
 
 
 def all_pc_options():
-    message = "Pick a category"
+    message = "Please, pick a category of your choice."
     screen_msg(message)
 
     # Generating 3 buttons stacked on top of each other => this formation is called 'blue'
@@ -74,7 +73,7 @@ def personal_choice():
 
 
 def interval_level():
-    message = "The interval level will set the speed of the words appearing on the screen. Choose an interval level."
+    message = "The interval level will set the speed of the words appearing on the screen.\nChoose an interval level."
     screen_msg(message)
 
     top_text = "Slow"
@@ -87,24 +86,35 @@ def default_input():
     message = "Enter each word followed by a comma."
     screen_msg(message)
 
-    entry_box()
+    btn_text = "Submit"
+    entry_box(btn_text)
+
+
+def vocab_input():
+    message = """Enter a keyword separated from the value with ":" and separate the key/value pair from others with a comma ",".\nExample: despacito:slowly, amiga:friend, hola:hello, playa:beach"""
+    screen_msg(message)
 
     btn_text = "Submit"
-    create_small_button(btn_text)
-
-
-# def vocab_input():
-#     message = 'Enter a keyword into the keyword entry box and a matching value into the value box. '
+    entry_box(btn_text)
 
 
 def enter_solution():
-    message = "Enter everything the same order separated by a comma."
+    message = "Enter everything in the same order separated by a comma."
     screen_msg(message)
 
-    entry_box()
+    btn_text = "Submit"
+    entry_box(btn_text)
+
+
+def if_wrong():
+    message = "Sorry it's incorrect.\nTry agian, you can do it!"
+    screen_msg(message)
 
     btn_text = "Submit"
-    create_small_button(btn_text)
+    entry_box(btn_text)
+
+    quit_btn = "Quit"
+    create_small_button(quit_btn, 0.9, 0.04)
 
 
 def madlibs_category():
@@ -118,13 +128,11 @@ def madlibs_category():
 
 
 def madlibs_verbs():
-    message = "Enter grotesque, crazy, over the top and easy to remember and visualize verbs into the entry box."
+    message = "Enter grotesque, crazy, over the top, easy to remember and visualizable verbs into the entry box."
     screen_msg(message)
 
-    entry_box()
-
     btn_text = "Submit"
-    create_small_button(btn_text)
+    entry_box(btn_text)
 
 
 def if_correct_end():
@@ -158,7 +166,45 @@ def create_btn(button_text, x_value, y_value, width=180, height=80):
         background="grey",
         activebackground="red",
     )
-    btn.place(x=x_value, y=y_value, width=width, height=height)
+    btn.place(relx=x_value, rely=y_value, width=width, height=height)
+
+
+# Creates large entry box for user input
+def entry_box(btn_text):
+    box = tk.Text(
+        entry_frame,
+        bd=5,
+        relief="raised",
+        cursor="hand",
+    )
+    box.pack(padx=10, pady=10)
+    create_small_button(btn_text)
+
+
+# Creates small buttons (Submit, Quit). By default centered.
+def create_small_button(button_text, x_value=SUBMIT_X_VALUE, y_value=SMALL_BTN_YVALUE):
+    width = SB_WIDTH
+    height = SB_HEIGHT
+    create_btn(button_text, x_value, y_value, width, height)
+
+
+# This function creates the text lines which are displayed to users
+# and places them on the screen. (Instructions etc.)
+def screen_msg(message, bold=""):
+    screen_meesage = tk.Message(
+        frame,
+        text=message,
+        justify="center",
+        bg="#F4DF23",
+        aspect=600,
+        font=("RhodiumLibre-Regular", int(28.0), bold),
+    )
+    screen_meesage.pack(pady=10, padx=10)
+
+
+# This function makes the header bold wihtout effecting the rest of the body
+def header_line(message, bold):
+    screen_msg(message, bold)
 
 
 # Creates 2 buttons lined up from left to right (Red = name of button placement)
@@ -174,63 +220,17 @@ def blue_buttons(top_text, middle_text, bottom_text):
     create_btn(bottom_text, BLUE_X_VALUE, BLUE_BOTTOM_Y)
 
 
-# Creates small buttons (Submit, Quit). By default centered.
-def create_small_button(button_text, x_value=SUBMIT_X_VALUE, y_value=SMALL_BTN_YVALUE):
-    width = SB_WIDTH
-    height = SB_HEIGHT
-    create_btn(button_text, x_value, y_value, width, height)
-
-
-# Creates large entry box for user input
-def entry_box():
-    box = tk.Text(
-        entry_frame,
-        bd=5,
-        relief="raised",
-        cursor="hand",
-    )
-    box.pack(padx=10, pady=10)
-
-
-# This function makes the header bold wihtout effecting the rest of the body
-def header_line(message, bold):
-    screen_msg(message, bold)
-
-
-# This function creates the text lines which are displayed to users
-# and places them on the screen. (Instructions etc.)
-def screen_msg(message, bold=""):
-    screen_meesage = tk.Message(
-        frame,
-        text=message,
-        justify="center",
-        bg="#F4DF23",
-        aspect=400,
-        font=("RhodiumLibre-Regular", int(28.0), bold),
-    )
-    screen_meesage.pack(pady=10, padx=10)
-
-
 if __name__ == "__main__":
     window = tk.Tk()
     window.geometry("900x700")
     window.configure(bg="#F4DF23")
-    canvas = tk.Canvas(
-        window,
-        bg="#F4DF23",
-        height=700,
-        width=900,
-        bd=0,
-        highlightthickness=0,
-        relief="ridge",
-    )
-    canvas.place(x=0, y=0)
 
-    frame = tk.Frame(canvas, background="#F4DF23")
-    frame.place(relx=0.25, rely=0.15, relwidth=0.8, relheight=0.4)
+    frame = tk.Frame(window, background="#F4DF23")
+    frame.place(relx=0.05, rely=0.1, relwidth=0.9, relheight=0.4)
 
-    entry_frame = tk.Frame(canvas, background="#F4DF23")
-    entry_frame.place(relx=0.4, rely=0.6, relwidth=0.6, relheight=0.3)
-    default_input()
+    entry_frame = tk.Frame(window, background="#F4DF23")
+    entry_frame.place(relx=0.2, rely=0.5, relwidth=0.6, relheight=0.3)
+
+    welcome_page()
     window.resizable(True, True)
     window.mainloop()
