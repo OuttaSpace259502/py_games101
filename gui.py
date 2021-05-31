@@ -1,103 +1,116 @@
 import tkinter as tk
-from tkinter import Button, font
+from tkinter import Button, Message, font
 from PIL import ImageTk as itk
 
 # Coordinates for 2 buttons, side by side, from left to right
-# Giving this button formation the color name red to differenciate from other button groups
+# Giving this button formation the color name 'red' to differenciate from other button groups
 RED_Y_VALUE = 450
 RED_LEFT_X_VALUE = 150
 RED_RIGHT_X_VALUE = 560
 
-# Heading Line (bold)
-header_y = 150
-
-# Default coordinates for screen message who are one-liners (single line)
-default_x = 445  # x-coordinate always stays the same no matter how many lines
-default_middle_y = 250  # called default/middle line because all one liners will be using this y-cord. It is also the middle line y-cord for multiple line msgs.
-
-# 2nd line (after one liner)
-bottom_y = 300
+# Coordinated for 3 buttons each stacked on top of each other
+# This button group is called 'blue'
+BLUE_X_VALUE = 550
+BLUE_TOP_Y = 400
+BLUE_MIDDLE_Y = 500
+BLUE_BOTTOM_Y = 600
 
 
 def welcome_page():
     # Generating screen text line by line
     message = "Welcome to the Memory Training Program"
     bold = "bold"
-    heading_line(message, bold)
+    header_line(message, bold)
 
-    message = "This program will help you improve your memory and study"
-    default_middle_line(message)
-
-    message = "for important exams. Would you like to enter your own material "
-    bottom_line(message)
-
-    message = "or receive a computer generated list to memorize?"
-    screen_msg(message, default_x, 350)
+    message = "This program will help you improve your memory and study for important exams. Would you like to enter your own material or receive a computer generated list to memorize?"
+    screen_msg(message)
 
     # Generating buttons
     left_btn_msg = "Pc"
-    create_btn(left_btn_msg, RED_LEFT_X_VALUE, RED_Y_VALUE)
     right_btn_msg = "Input"
-    create_btn(right_btn_msg, RED_RIGHT_X_VALUE, RED_Y_VALUE)
+    red_buttons(left_btn_msg, right_btn_msg)
 
 
 def all_pc_options():
-    left_btn_msg = "Default"
-    create_btn(left_btn_msg, RED_LEFT_X_VALUE, RED_Y_VALUE)
+    message = "Pick a category"
+    screen_msg(message)
 
-    right_btn_msg = "Vocabulary"
-    create_btn(right_btn_msg, RED_RIGHT_X_VALUE, RED_Y_VALUE)
+    top_msg = "Numbers"
+    middle_msg = "Words"
+    bottom_msg = "Mixed"
+    blue_buttons(top_msg, middle_msg, bottom_msg)
 
-    message = "There are 2 options to choose from. For the default version just"
-    heading_line(message)
 
-    message = "enter the words of your choice. Vocabulary style will need a keyword"
-    default_middle_line(message)
+def level_choice():
+    message = "Depending on the level you pick, the amount of words to memorize will increase or decrease.\nPick a difficulty level."
+    screen_msg(message)
 
-    message = "followed by a value. The key/value pair will be displayed together."
-    bottom_line(message)
+    top_msg = "Easy"
+    middle_msg = "Advanced"
+    bottom_msg = "Pro"
+    blue_buttons(top_msg, middle_msg, bottom_msg)
 
 
 def personal_choice():
     # Generating screen text
-    message = "There are 2 options to choose from. For the default version just"
-    screen_msg(message, default_x, 200)
-
-    message = "enter the words of your choice. Vocabulary style will need a keyword"
-    default_middle_line(message)
-
-    message = "followed by a value. The key/value pair will be displayed together."
-    bottom_line(message)
+    message = "There are 2 options to choose from. For the default version just enter the words of your choice. Vocabulary style will need a keyword followed by a value. The key/value pair will be displayed together."
+    screen_msg(message)
 
     # Generating buttons
     left_btn_msg = "Default"
-    create_btn(left_btn_msg, RED_LEFT_X_VALUE, RED_Y_VALUE)
     right_btn_msg = "Vocabulary"
-    create_btn(right_btn_msg, RED_RIGHT_X_VALUE, RED_Y_VALUE)
+    red_buttons(left_btn_msg, right_btn_msg)
+
+
+def interval_level():
+    message = "The interval level will set the speed of the words appearing on the screen. Choose an interval level."
+    screen_msg(message)
+
+    top_msg = "Slow"
+    middle_msg = "Medium"
+    bottom_msg = "Fast"
+    blue_buttons(top_msg, middle_msg, bottom_msg)
+
+
+# def vocab_input():
+#     message = 'Enter a keyword into the keyword entry box and a matching value into the value box. '
+
+
+def enter_solution():
+    message = "Enter everything the same order separated by a comma."
+    screen_msg(message)
+
+
+def madlibs_category():
+    message = "Before you continue, we would like to help your memory with a mad libs. Please, choose a category:"
+    screen_msg(message)
+
+    top_msg = "Body"
+    middle_msg = "Car"
+    bottom_msg = "Home"
+    blue_buttons(top_msg, middle_msg, bottom_msg)
 
 
 def if_correct_end():
     message = "Congratulations!"
     bold = "bold"
-    heading_line(message, bold)
+    header_line(message, bold)
 
     message = "Your memory is impeccable! Would you like to play again?"
-    default_middle_line(message)
+    screen_msg(message)
 
     left_btn_msg = "Quit"
-    create_btn(left_btn_msg, RED_LEFT_X_VALUE, RED_Y_VALUE)
     right_btn_msg = "Continue"
-    create_btn(right_btn_msg, RED_RIGHT_X_VALUE, RED_Y_VALUE)
+    red_buttons(left_btn_msg, right_btn_msg)
 
 
 def ask_to_save():
     message = "Would you like to save your input list?"
-    default_middle_line(message)
+    screen_msg(message)
 
     left_btn_msg = "No"
-    create_btn(left_btn_msg, RED_LEFT_X_VALUE, RED_Y_VALUE)
     right_btn_msg = "Yes"
-    create_btn(right_btn_msg, RED_RIGHT_X_VALUE, RED_Y_VALUE)
+    red_buttons(left_btn_msg, right_btn_msg)
 
 
 # Generates all buttons and locates them according to x/y coordinated passed in.
@@ -111,33 +124,42 @@ def create_btn(button_text, x_value, y_value):
     btn.place(x=x_value, y=y_value, width=180, height=80)
 
 
-# The following 3 function determine the location of line generated
-# This function places the header
-def heading_line(message, bold):
-    screen_msg(message, default_x, header_y, bold)
+def red_buttons(left_message, right_message):
+    create_btn(left_message, RED_LEFT_X_VALUE, RED_Y_VALUE)
+    create_btn(right_message, RED_RIGHT_X_VALUE, RED_Y_VALUE)
 
 
-# This is the default line. If only one line needed on the screen this function will be used to place the line
-# If multiple lines are needed => it functions as the middle or 2nd line.
-def default_middle_line(message):
-    screen_msg(message, default_x, default_middle_y)
+def blue_buttons(top_msg, middle_msg, bottom_msg):
+    create_btn(top_msg, BLUE_X_VALUE, BLUE_TOP_Y)
+    create_btn(middle_msg, BLUE_X_VALUE, BLUE_MIDDLE_Y)
+    create_btn(bottom_msg, BLUE_X_VALUE, BLUE_BOTTOM_Y)
 
 
-# This function places the bottom line
-def bottom_line(message):
-    screen_msg(message, default_x, bottom_y)
+# def entry_box():
+#     box = tk.(
+#         bd=5,
+#         relief='raised',
+#         cursor='hand',
+
+#     )
 
 
-# This is actually creating the lines and place them on the screen
-# with the help of the previous 3 helper functions
-def screen_msg(message, x_value, y_value, bold=""):
-    canvas.create_text(
-        x_value,
-        y_value,
+# This function makes the header bold wihtout effecting the rest of the body
+def header_line(message, bold):
+    screen_msg(message, bold)
+
+
+# This function creates the lines and places them on the screen
+def screen_msg(message, bold=""):
+    screen_meesage = tk.Message(
+        frame,
         text=message,
-        fill="#000000",
+        justify="center",
+        bg="#F4DF23",
+        aspect=400,
         font=("RhodiumLibre-Regular", int(28.0), bold),
     )
+    screen_meesage.pack(pady=10, padx=10)
 
 
 if __name__ == "__main__":
@@ -153,7 +175,9 @@ if __name__ == "__main__":
         highlightthickness=0,
         relief="ridge",
     )
-    personal_choice()
+    frame = tk.Frame(canvas, background="#F4DF23")
+    frame.place(relx=0.25, rely=0.15, relwidth=0.8, relheight=0.4)
+    madlibs_category()
     canvas.place(x=0, y=0)
     window.resizable(True, True)
     window.mainloop()
